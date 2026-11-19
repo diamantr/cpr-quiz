@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>סכמת החייאה – קורס חובשים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Secular+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECEEE5; --card:#F8F9F3; --ink:#1C241D; --muted:#5B6657; --line:#CCD2C0;
+  --olive:#4A5A36; --olive-soft:#DCE3CC; --sand:#D8CDAE;
+  --ok:#2E7A4C; --ok-soft:#D7EBDD; --bad:#B3261E; --bad-soft:#F5DAD7;
+  --b1:#B3261E; --b2:#C9792A; --b3:#B9A23A; --b4:#6E8F45; --b5:#2E7A4C; --b0:#B8BCB0;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141814; --card:#1D221D; --ink:#E5E9DF; --muted:#A3AD9C; --line:#343C33;
+    --olive:#A9BB8A; --olive-soft:#2B3324; --sand:#4A4636;
+    --ok:#6CC08F; --ok-soft:#1E3326; --bad:#F07B72; --bad-soft:#3A1F1D;
+    --b1:#E0645A; --b2:#E0964F; --b3:#D2BE5A; --b4:#93B46A; --b5:#6CC08F; --b0:#4C5249;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141814; --card:#1D221D; --ink:#E5E9DF; --muted:#A3AD9C; --line:#343C33;
+  --olive:#A9BB8A; --olive-soft:#2B3324; --sand:#4A4636;
+  --ok:#6CC08F; --ok-soft:#1E3326; --bad:#F07B72; --bad-soft:#3A1F1D;
+  --b1:#E0645A; --b2:#E0964F; --b3:#D2BE5A; --b4:#93B46A; --b5:#6CC08F; --b0:#4C5249;
+  color-scheme: dark;
+}
+:root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); }
+*,*::before,*::after{ box-sizing:inherit; }
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Assistant","Arial Hebrew","Segoe UI",Arial,sans-serif; font-size:18px; line-height:1.55; }
+h1,h2,.display{ font-family:"Secular One","Assistant","Arial Hebrew",Arial,sans-serif; font-weight:400; }
+main{ max-width:640px; margin:0 auto; padding:28px 20px 48px; }
+button{ font:inherit; color:inherit; cursor:pointer; }
+button:focus-visible, select:focus-visible{ outline:3px solid var(--olive); outline-offset:2px; }
+.hidden{ display:none !important; }
+
+/* Home */
+.title{ font-size:2.1rem; line-height:1.15; margin:0 0 6px; }
+.lede{ color:var(--muted); margin:0 0 28px; max-width:46ch; }
+.pouches{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 18px 14px; margin-bottom:22px; }
+.pouches h2{ font-size:1.15rem; margin:0 0 4px; }
+.pouches p{ margin:0 0 14px; color:var(--muted); font-size:.95rem; }
+.rack{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; align-items:end; height:120px; }
+.slot{ display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; }
+.bar{ width:100%; border-radius:6px 6px 2px 2px; min-height:4px; transition:height .5s ease; }
+.cnt{ font-weight:700; font-size:.95rem; margin-bottom:4px; }
+.lbls{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-top:6px; text-align:center; font-size:.78rem; color:var(--muted); line-height:1.2; }
+.focusline{ margin-top:14px; font-size:.95rem; }
+.focusline b{ color:var(--olive); }
+
+.panel{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; margin-bottom:16px; }
+.panel h2{ font-size:1.1rem; margin:0 0 12px; }
+.seg{ display:flex; gap:8px; flex-wrap:wrap; }
+.seg button{ flex:1 1 auto; min-width:64px; padding:10px 12px; border:1.5px solid var(--line); border-radius:10px; background:transparent; font-weight:600; }
+.seg button[aria-pressed="true"]{ border-color:var(--olive); background:var(--olive-soft); color:var(--ink); }
+.modes{ display:grid; gap:8px; }
+.modes button{ text-align:right; padding:12px 14px; border:1.5px solid var(--line); border-radius:10px; background:transparent; }
+.modes button[aria-pressed="true"]{ border-color:var(--olive); background:var(--olive-soft); }
+.modes small{ display:block; color:var(--muted); font-size:.88rem; }
+select{ font:inherit; width:100%; padding:10px 12px; margin-top:8px; border-radius:10px; border:1.5px solid var(--line); background:var(--card); color:var(--ink); }
+.go{ width:100%; padding:16px; border:0; border-radius:12px; background:var(--olive); color:var(--paper); font-size:1.15rem; font-weight:700; margin-top:6px; }
+.go:disabled{ opacity:.45; cursor:not-allowed; }
+.small-link{ background:none; border:0; color:var(--muted); text-decoration:underline; font-size:.9rem; padding:8px 0; margin-top:18px; }
+
+/* Quiz */
+.top{ display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.prog{ flex:1; height:8px; background:var(--line); border-radius:99px; overflow:hidden; }
+.prog i{ display:block; height:100%; background:var(--olive); width:0; transition:width .3s ease; }
+.quit{ background:none; border:0; color:var(--muted); font-size:.95rem; padding:4px; }
+.tag{ display:inline-block; font-size:.85rem; color:var(--olive); font-weight:700; margin-bottom:8px; }
+.tag.again{ color:var(--bad); }
+.q{ font-size:1.35rem; line-height:1.4; margin:0 0 20px; font-weight:700; }
+.opts{ display:grid; gap:10px; }
+.opt{ display:flex; gap:12px; align-items:flex-start; text-align:right; padding:14px 14px; border:1.5px solid var(--line); border-radius:12px; background:var(--card); line-height:1.4; }
+.opt .k{ flex:0 0 26px; height:26px; border-radius:50%; border:1.5px solid var(--line); display:grid; place-items:center; font-size:.85rem; font-weight:700; color:var(--muted); }
+.opt:hover:not(:disabled){ border-color:var(--olive); }
+.opt:disabled{ cursor:default; }
+.opt.right{ border-color:var(--ok); background:var(--ok-soft); }
+.opt.right .k{ border-color:var(--ok); color:var(--ok); }
+.opt.wrong{ border-color:var(--bad); background:var(--bad-soft); }
+.opt.wrong .k{ border-color:var(--bad); color:var(--bad); }
+.fb{ margin-top:18px; padding:14px 16px; border-radius:12px; border-inline-start:5px solid var(--ok); background:var(--card); }
+.fb.bad{ border-inline-start-color:var(--bad); }
+.fb strong{ display:block; margin-bottom:4px; }
+.fb p{ margin:0; }
+.fb .note{ margin-top:8px; color:var(--muted); font-size:.92rem; }
+.next{ width:100%; margin-top:16px; padding:14px; border:0; border-radius:12px; background:var(--ink); color:var(--paper); font-weight:700; font-size:1.05rem; }
+.hint{ text-align:center; color:var(--muted); font-size:.82rem; margin-top:10px; }
+
+/* Summary */
+.score{ font-family:"Secular One","Assistant",Arial,sans-serif; font-size:3.4rem; line-height:1; margin:8px 0 4px; }
+.sumlist{ list-style:none; padding:0; margin:0; }
+.sumlist li{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); }
+.sumlist li:last-child{ border-bottom:0; }
+.sumlist .n{ color:var(--bad); font-weight:700; }
+.ghost{ width:100%; padding:14px; border:1.5px solid var(--olive); border-radius:12px; background:transparent; color:var(--olive); font-weight:700; font-size:1.05rem; margin-top:10px; }
+
+@media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+@media (max-width:420px){ body{ font-size:17px; } .title{ font-size:1.8rem; } .q{ font-size:1.2rem; } .lbls{ font-size:.7rem; } }
+</style>
+</head>
+<body>
+<main>
+<section id="home">
+  <h1 class="title">סכמת החייאה בצוות BLS</h1>
+  <p class="lede">שאלות אמריקאיות על סכמת ההחייאה – מבוגר, ילדים ותינוקות. שאלה שטעית בה חוזרת אליך תוך כמה שאלות, ושוב בסבב הבא – עד שהיא יושבת.</p>
+
+  <div class="pouches" aria-labelledby="ph">
+    <h2 id="ph">איפה כל השאלות עומדות</h2>
+    <p>כל תשובה נכונה מקדמת שאלה קופסה אחת ימינה, וכל טעות מחזירה אותה להתחלה.</p>
+    <div class="rack" id="rack"></div>
+    <div class="lbls">
+      <span>עוד לא נשאלו</span><span>טעויות – חוזרות כל סבב</span><span>בלמידה</span><span>מתייצב</span><span>כמעט שם</span><span>יודע</span>
+    </div>
+    <div class="focusline" id="focusline"></div>
+  </div>
+
+  <div class="panel">
+    <h2>מה מתרגלים</h2>
+    <div class="modes" id="modes">
+      <button data-mode="all" aria-pressed="true">כל השאלות</button>
+      <button data-mode="mistakes" aria-pressed="false">רק הטעויות שלי<small id="mistakeCount"></small></button>
+      <button data-mode="topic" aria-pressed="false">חלק אחד</button>
+    </div>
+    <select id="topicSel" class="hidden" aria-label="בחירת נושא"></select>
+  </div>
+
+  <div class="panel">
+    <h2>אורך הסבב</h2>
+    <div class="seg" id="sizes">
+      <button data-n="10" aria-pressed="true">10 שאלות</button>
+      <button data-n="20" aria-pressed="false">20 שאלות</button>
+      <button data-n="30" aria-pressed="false">30 שאלות</button>
+    </div>
+  </div>
+
+  <button class="go" id="start">התחל סבב</button>
+  <button class="small-link" id="reset">איפוס ההתקדמות</button>
+</section>
+
+<section id="quiz" class="hidden" aria-live="polite">
+  <div class="top">
+    <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+    <button class="quit" id="quit">סיום</button>
+  </div>
+  <span class="tag" id="qtag"></span>
+  <p class="q" id="qtext"></p>
+  <div class="opts" id="opts"></div>
+  <div id="fb" class="fb hidden"></div>
+  <button class="next hidden" id="next">לשאלה הבאה</button>
+  <p class="hint" id="khint">אפשר לענות גם במקשים 1–4</p>
+</section>
+
+<section id="summary" class="hidden">
+  <h1 class="title" id="sumTitle"></h1>
+  <div class="score" id="sumScore"></div>
+  <p class="lede" id="sumText"></p>
+  <div class="panel" id="sumPanel">
+    <h2>איפה היו הטעויות</h2>
+    <ul class="sumlist" id="sumList"></ul>
+  </div>
+  <button class="go" id="again">סבב נוסף</button>
+  <button class="ghost" id="fixMistakes">תרגול הטעויות בלבד</button>
+  <button class="ghost" id="toHome">חזרה למסך הראשי</button>
+</section>
+</main>
+<script>
+const TOPICS = {
+  gen:{name:"שלבי הסכמה",focus:false},
+  adult:{name:"מבוגר",focus:false},
+  child:{name:"ילדים ותינוקות",focus:false},
+  aed:{name:"דפיברילטור",focus:false}
+};
+// [topic, question, correct, [wrong options], explanation]
+const RAW = [
+["gen","מה הסדר הנכון של שלבי סכמת ההחייאה בצוות BLS?","S ‏←‏ AVPU ‏←‏ קריאה לעזרה ‏←‏ בדיקת דופק ונשימה ‏←‏ C ‏←‏ A ‏←‏ B",["S ‏←‏ AVPU ‏←‏ קריאה לעזרה ‏←‏ בדיקת דופק ונשימה ‏←‏ A ‏←‏ B ‏←‏ C","AVPU ‏←‏ S ‏←‏ בדיקת דופק ונשימה ‏←‏ קריאה לעזרה ‏←‏ C ‏←‏ A ‏←‏ B","S ‏←‏ קריאה לעזרה ‏←‏ בדיקת דופק ונשימה ‏←‏ AVPU ‏←‏ C ‏←‏ B ‏←‏ A"],"קודם בטיחות, אחר כך הכרה, קריאה לעזרה, דופק ונשימה – ורק אז C–A–B. הסדר זהה במבוגר ובילד."],
+["gen","באיזה סדר מבוצעות האותיות בהחייאה לפי הסכמה?","C ‏←‏ A ‏←‏ B",["A ‏←‏ B ‏←‏ C","B ‏←‏ A ‏←‏ C","A ‏←‏ C ‏←‏ B"],"קודם עיסויים (C), אחר כך פתיחת נתיב אוויר (A), ובסוף הנשמות (B)."],
+["gen","מה כולל שלב ה־S בסכמת ההחייאה?","ביטחון המטפל והמטופל – עלייה על כפפות והרחקה מגורם מסכן",["בדיקת הכרה לפי AVPU","בדיקת דופק ונשימה","קריאה לצוות ALS ולדפיברילטור"],"S = Safety. לפני שנוגעים במטופל דואגים לבטיחות של שנינו."],
+["gen","מה בודקים מיד אחרי שלב ה־S?","הכרה – לפי AVPU",["דופק ונשימה","נתיב אוויר","לחץ דם"],"הסדר: S ‏←‏ בדיקת הכרה (AVPU) ‏←‏ קריאה לעזרה."],
+["gen","מה כוללת ״קריאה לעזרה״ בסכמה?","הזעקת צוות ALS + הבאת דפיברילטור וחיבורו מהר ככל הניתן",["הזעקת צוות ALS בלבד","הבאת ציוד נתיב אוויר מתקדם","הודעה למפקד ופינוי מיידי"],"הדפיברילטור הוא חלק מהקריאה לעזרה – מביאים ומחברים אותו כמה שיותר מוקדם."],
+["gen","מתי מבצעים קריאה לעזרה?","אחרי בדיקת ההכרה ולפני בדיקת הדופק והנשימה",["רק אחרי סבב העיסויים הראשון","לפני שלב ה־S","רק אם התברר שאין דופק"],"לא מחכים לבדיקת דופק – קוראים לעזרה מיד אחרי ה־AVPU."],
+["gen","בבדיקה יש דופק ויש נשימה. מה עושים?","ממשיכים טיפול בחולה וניטור עד הגעת צוות ALS",["מתחילים עיסויים","מנשימים ביחס 1:5","פותחים נתיב אוויר ומנשימים 2 הנשמות"],"יש דופק ונשימה – לא מחייאים, אבל ממשיכים לטפל ולנטר."],
+["adult","מבוגר: יש דופק ואין נשימה. מה עושים?","הנשמות ביחס 1:5 באמצעות אמבו, ובדיקת דופק כל 2 דקות",["30 עיסויים ו־2 הנשמות","הנשמות ביחס 1:5 ובדיקת דופק כל 5 דקות","ניטור בלבד עד הגעת צוות ALS"],"יש דופק – אין צורך בעיסויים, רק בהנשמות. בודקים דופק כל 2 דקות."],
+["child","ילד: יש דופק ואין נשימה. באיזה יחס מנשימים?","1:4",["1:5","1:3","1:2"],"מבוגר 1:5, ילד 1:4, תינוק 1:3 – תמיד באמצעות אמבו."],
+["child","תינוק: יש דופק ואין נשימה. באיזה יחס מנשימים?","1:3",["1:4","1:5","1:6"],"ככל שהמטופל קטן יותר – המספר קטן יותר: מבוגר 1:5, ילד 1:4, תינוק 1:3."],
+["gen","מטופל עם דופק בלי נשימה מקבל הנשמות. כל כמה זמן בודקים דופק?","כל 2 דקות",["כל דקה","כל 5 דקות","רק כשצוות ALS מגיע"],"זהה במבוגר, בילד ובתינוק."],
+["gen","אין דופק, והמטופל נושם נשימות Gasping. מה עושים?","מתייחסים לזה כאל אין נשימה – מתחילים בשלב C",["זו נשימה – ממשיכים טיפול וניטור","מנשימים ביחס 1:5","פותחים נתיב אוויר וממתינים לצוות ALS"],"נשימות Gasping הן נשימות אגונאליות (גסיסה) – הן לא נחשבות נשימה."],
+["gen","איך נקראות נשימות ה־Gasping בסכמה?","נשימות אגונאליות",["נשימות פרדוקסליות","נשימות שטחיות","נשימות מאומצות"],"אגונאליות = נשימות גסיסה. בסכמה הן נמצאות באותו ענף כמו ״אין דופק ואין נשימה״."],
+["adult","כמה עיסויי חזה מבצעים בשלב C במבוגר?","30",["15","10","50"],"מבוגר 30, ילדים ותינוקות 15."],
+["child","כמה עיסויי חזה מבצעים בשלב C בילד או בתינוק?","15",["30","5","20"],"מבוגר 30, ילדים ותינוקות 15."],
+["gen","מה עוד כולל שלב ה־C חוץ מהעיסויים?","שימוש בדפיברילטור בהקדם האפשרי",["2 הנשמות באמבו","סילוק הפרשות","בדיקת AVPU חוזרת"],"גם בילדים וגם במבוגרים – מחברים דפיברילטור כמה שיותר מהר."],
+["child","תינוק ללא דופק וללא נשימה. מה נכון לגבי שלב C?","15 עיסויים ושימוש בדפיברילטור בהקדם האפשרי",["30 עיסויים ושימוש בדפיברילטור","15 עיסויים, בלי דפיברילטור – לא מחברים לתינוקות","5 הנשמות פתיחה ורק אחריהן 15 עיסויים"],"בסכמת ילדים ותינוקות – 15 עיסויים, והדפיברילטור מופיע בדיוק כמו אצל מבוגר."],
+["gen","מה כולל שלב ה־A?","פתיחת נתיב אוויר וסילוק הפרשות",["2 הנשמות באמבו","עיסויי חזה","בדיקת הכרה"],"A = Airway."],
+["gen","איך מסלקים הפרשות בשלב ה־A?","ידנית או בעזרת סקשן",["רק בעזרת סקשן","רק ידנית","לא מסלקים – מנשימים חזק יותר"],"שתי האפשרויות כתובות בסכמה: ידני / ע״י סקשן."],
+["gen","מה מבצעים בשלב ה־B?","2 הנשמות באמצעות אמבו בלבד",["2 הנשמות פה לפה","5 הנשמות באמבו","הנשמה אחת באמבו"],"״בלבד״ – ההנשמות בהחייאה הן באמבו."],
+["gen","מה מהבאים זהה בסכמה של מבוגר ובסכמה של ילד?","2 הנשמות באמבו בשלב ה־B",["30 עיסויים בשלב ה־C","הנשמות ביחס 1:5 כשיש דופק","הסיבה להפסקת ההחייאה"],"ההבדלים: מספר העיסויים (30/15), יחס ההנשמות כשיש דופק (1:5 / 1:4 / 1:3) ותנאי ההפסקה."],
+["adult","מבוגר: עד מתי ממשיכים את הסכמה (עיסויים)?","עד הוראת צוות ALS או התנגדות המטופל",["עד הגעת צוות ALS או שהמטופל מתחיל לזוז","20 דקות ואז מפסיקים","עד 3 שוקים מהדפיברילטור"],"שים לב: אצל ילדים התנאי שונה – עד הגעת צוות ALS או שהמטופל מתחיל לזוז."],
+["child","ילד או תינוק: עד מתי ממשיכים את הסכמה (עיסויים)?","עד הגעת צוות ALS או שהמטופל מתחיל לזוז",["עד הוראת צוות ALS או התנגדות המטופל","10 דקות ואז מפסיקים","עד 5 סבבים מלאים"],"במבוגר – עד הוראת ALS / התנגדות המטופל. בילד – עד הגעת ALS / שהמטופל מתחיל לזוז."],
+["aed","הדפיברילטור מחובר. לפי מה ממשיכים את ההחייאה?","לפי הוראות הדפיברילטור",["לפי שיקול דעת החובש בלבד","מפסיקים עיסויים עד הגעת ALS","לפי בדיקת דופק כל דקה"],"ה־AED מנחה מתי לעצור ומתי לתת שוק."],
+["aed","מתי עוצרים עיסויים כשה־AED מחובר?","רק לצורך אבחון קצב ע״י המכשיר ומתן שוק במידת הצורך",["כל 2 דקות לבדיקת דופק","כדי לבצע 10 הנשמות","בכל פעם שמחליפים מעסה"],"כל עצירה בעיסויים פוגעת בזרימת הדם – עוצרים רק כשהמכשיר מנתח קצב או נותן שוק."],
+["adult","מבוגר לא מגיב קיבל הנשמות כי היה לו דופק. בבדיקה אחרי 2 דקות – אין דופק. מה עושים?","עוברים לשלב C – 30 עיסויים ושימוש בדפיברילטור",["ממשיכים הנשמות 1:5 ובודקים שוב בעוד 2 דקות","מנשימים 2 הנשמות וממתינים","בודקים AVPU מחדש"],"אין דופק ואין נשימה = שלב C. במבוגר – 30 עיסויים."],
+["gen","סיימת 2 הנשמות בשלב ה־B. מה הלאה?","ממשיכים בסכמה – חוזרים לעיסויים",["בודקים AVPU מחדש","ממתינים להוראת צוות ALS לפני שממשיכים","בודקים דופק במשך דקה"],"הסכמה ממשיכה במחזורים של C–A–B עד שמתקיים תנאי ההפסקה."]
+];
+const QUESTIONS = (()=>{const c={};return RAW.map(r=>{c[r[0]]=(c[r[0]]||0)+1;return{id:r[0]+"-"+c[r[0]],t:r[0],q:r[1],a:r[2],w:r[3],e:r[4]};});})();
+const BY_ID = Object.fromEntries(QUESTIONS.map(q=>[q.id,q]));
+const KEY="cpr-srs-v1";
+const INT_STD=[0,1,2,4,7,12], INT_FOCUS=[0,1,1,2,4,7];
+let S = load();
+function load(){ try{ const v=JSON.parse(localStorage.getItem(KEY)||"null"); if(v&&v.cards) return v; }catch(e){} return {round:0,cards:{}}; }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function card(id){ return S.cards[id] || (S.cards[id]={b:0,due:0,seen:0,wrong:0}); }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function interval(q,b){ return (TOPICS[q.t].focus?INT_FOCUS:INT_STD)[b]; }
+const $=id=>document.getElementById(id);
+
+let mode="all", size=10;
+function poolFor(m){
+  if(m==="focus") return QUESTIONS.filter(q=>TOPICS[q.t].focus);
+  if(m==="mistakes") return QUESTIONS.filter(q=>{const c=S.cards[q.id];return c&&c.seen&&c.b<=1;});
+  if(m==="topic") return QUESTIONS.filter(q=>q.t===$("topicSel").value);
+  return QUESTIONS;
+}
+function renderHome(){
+  const counts=[0,0,0,0,0,0];
+  QUESTIONS.forEach(q=>{const c=S.cards[q.id]; counts[c&&c.seen?c.b:0]++;});
+  const max=Math.max(...counts,1);
+  const colors=["--b0","--b1","--b2","--b3","--b4","--b5"];
+  $("rack").innerHTML=counts.map((n,i)=>`<div class="slot"><span class="cnt">${n}</span><div class="bar" style="height:${Math.max(4,Math.round(n/max*92))}px;background:var(${colors[i]})"></div></div>`).join("");
+  const f=QUESTIONS;
+  const fk=f.filter(q=>{const c=S.cards[q.id];return c&&c.b>=4;}).length;
+  $("focusline").innerHTML=`<b>${fk} מתוך ${f.length}</b> שאלות כבר במצב ״כמעט שם״ או ״יודע״.`;
+  const mc=poolFor("mistakes").length;
+  $("mistakeCount").textContent = mc? `${mc} שאלות מחכות לחזרה` : "אין כרגע טעויות פתוחות";
+  updateStart();
+}
+function updateStart(){ $("start").disabled = poolFor(mode).length===0; }
+
+$("topicSel").innerHTML=Object.entries(TOPICS).map(([k,v])=>`<option value="${k}">${v.name} (${QUESTIONS.filter(q=>q.t===k).length})</option>`).join("");
+$("topicSel").addEventListener("change",updateStart);
+$("modes").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;mode=b.dataset.mode;[...$("modes").children].forEach(x=>x.setAttribute("aria-pressed",x===b));$("topicSel").classList.toggle("hidden",mode!=="topic");updateStart();});
+$("sizes").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;size=+b.dataset.n;[...$("sizes").children].forEach(x=>x.setAttribute("aria-pressed",x===b));});
+$("reset").addEventListener("click",()=>{ if(confirm("למחוק את כל ההתקדמות ולהתחיל מאפס?")){ S={round:0,cards:{}}; save(); renderHome(); }});
+
+// ----- session -----
+let queue=[], pos=0, sess=null;
+function buildSession(m,n){
+  S.round++;
+  const pool=poolFor(m);
+  const seen=pool.filter(q=>S.cards[q.id]&&S.cards[q.id].seen);
+  const due=shuffle(seen.filter(q=>card(q.id).due<=S.round)).sort((a,b)=>card(a.id).b-card(b.id).b || card(b.id).wrong-card(a.id).wrong);
+  let fresh=shuffle(pool.filter(q=>!(S.cards[q.id]&&S.cards[q.id].seen)));
+  if(m==="all"){ // interleave: 2 focus questions for every 1 other
+    const F=fresh.filter(q=>TOPICS[q.t].focus), O=fresh.filter(q=>!TOPICS[q.t].focus); fresh=[];
+    while(F.length||O.length){ if(F.length)fresh.push(F.shift()); if(F.length)fresh.push(F.shift()); if(O.length)fresh.push(O.shift()); }
+  }
+  const later=seen.filter(q=>card(q.id).due>S.round).sort((a,b)=>card(a.id).due-card(b.id).due || card(a.id).b-card(b.id).b);
+  const pick=[], add=q=>{ if(pick.length<n && !pick.includes(q)) pick.push(q); };
+  due.slice(0,Math.ceil(n*0.7)).forEach(add);
+  fresh.forEach(add); due.forEach(add); later.forEach(add);
+  return shuffle(pick);
+}
+function startSession(m){
+  const list=buildSession(m,size);
+  if(!list.length) return;
+  queue=list.map(q=>({q,again:false}));
+  pos=0; sess={unique:list.length,firstOk:0,wrongIds:new Set(),done:new Set(),m};
+  save(); show("quiz"); renderQ();
+}
+function show(id){ ["home","quiz","summary"].forEach(s=>$(s).classList.toggle("hidden",s!==id)); window.scrollTo(0,0); }
+let current=null, answered=false;
+function renderQ(){
+  current=queue[pos]; answered=false;
+  const q=current.q;
+  $("qtag").textContent = current.again ? "שוב – בדיוק שאלה שטעית בה" : TOPICS[q.t].name;
+  $("qtag").className = "tag"+(current.again?" again":"");
+  $("qtext").textContent=q.q;
+  const opts=shuffle([q.a,...q.w]);
+  $("opts").innerHTML=opts.map((o,i)=>`<button class="opt" data-v="${i}"><span class="k">${i+1}</span><span>${o}</span></button>`).join("");
+  [...$("opts").children].forEach((b,i)=>{ b.dataset.correct = opts[i]===q.a ? "1":"0"; b.addEventListener("click",()=>answer(b)); });
+  $("fb").classList.add("hidden"); $("next").classList.add("hidden");
+  $("progBar").style.width = Math.round(sess.done.size/sess.unique*100)+"%";
+}
+function answer(btn){
+  if(answered) return; answered=true;
+  const q=current.q, c=card(q.id), ok=btn.dataset.correct==="1";
+  [...$("opts").children].forEach(b=>{ b.disabled=true; if(b.dataset.correct==="1") b.classList.add("right"); });
+  if(!ok) btn.classList.add("wrong");
+  c.seen++;
+  const fb=$("fb");
+  if(ok){
+    if(sess.wrongIds.has(q.id)){ c.b=1; c.due=S.round+1; }
+    else { c.b=Math.min(5,(c.b||1)+1); c.due=S.round+interval(q,c.b); sess.firstOk++; }
+    sess.done.add(q.id);
+    fb.className="fb";
+    fb.innerHTML=`<strong>${current.again?"יפה, הפעם זה נכנס.":"נכון."}</strong><p>${q.e}</p>`;
+  } else {
+    c.b=1; c.due=S.round+1; c.wrong++;
+    sess.wrongIds.add(q.id);
+    const at=Math.min(queue.length, pos+3+Math.floor(Math.random()*2));
+    queue.splice(at,0,{q,again:true});
+    fb.className="fb bad";
+    fb.innerHTML=`<strong>התשובה הנכונה מסומנת בירוק.</strong><p>${q.e}</p><p class="note">השאלה תחזור אליך עוד כמה שאלות, ושוב בסבב הבא.</p>`;
+  }
+  save();
+  fb.classList.remove("hidden");
+  $("next").classList.remove("hidden");
+  $("next").textContent = pos+1<queue.length ? "לשאלה הבאה" : "לסיכום";
+  $("next").focus({preventScroll:true});
+}
+function nextQ(){ pos++; if(pos>=queue.length) return finish(); renderQ(); }
+$("next").addEventListener("click",nextQ);
+$("quit").addEventListener("click",()=>{ sess.done.size? finish() : (show("home"),renderHome()); });
+document.addEventListener("keydown",e=>{
+  if($("quiz").classList.contains("hidden")) return;
+  if(!answered && /^[1-4]$/.test(e.key)){ const b=$("opts").children[+e.key-1]; if(b) answer(b); }
+  else if(answered && e.key==="Enter" && document.activeElement!==$("next")){ nextQ(); }
+});
+function finish(){
+  const n=sess.done.size||sess.unique, ok=sess.firstOk, pct=Math.round(ok/Math.max(1,n)*100);
+  $("sumScore").textContent=`${ok}/${n}`;
+  $("sumTitle").textContent = pct>=85?"סבב חזק":pct>=60?"התקדמות טובה":"סבב של למידה";
+  $("sumText").textContent = pct>=85
+    ? "רוב השאלות נכונות כבר בניסיון הראשון. השאלות האלה יחזרו בתדירות נמוכה יותר."
+    : pct>=60 ? "הבסיס נמצא. השאלות שטעית בהן יופיעו ראשונות בסבב הבא – ככה בדיוק זה עובד."
+    : "טעויות בשלב הזה הן חלק מהשיטה, לא סימן לכישלון. כל שאלה שטעית בה תחזור עד שהיא יושבת. סבב קצר מחר עדיף על לילה לבן.";
+  const byT={}; sess.wrongIds.forEach(id=>{const t=BY_ID[id].t;byT[t]=(byT[t]||0)+1;});
+  const ent=Object.entries(byT).sort((a,b)=>b[1]-a[1]);
+  $("sumPanel").classList.toggle("hidden",!ent.length);
+  $("sumList").innerHTML=ent.map(([t,k])=>`<li><span>${TOPICS[t].name}</span><span class="n">${k}</span></li>`).join("");
+  $("fixMistakes").classList.toggle("hidden",!poolFor("mistakes").length);
+  show("summary");
+}
+$("again").addEventListener("click",()=>startSession(sess.m==="mistakes"&&!poolFor("mistakes").length?"all":sess.m));
+$("fixMistakes").addEventListener("click",()=>startSession("mistakes"));
+$("toHome").addEventListener("click",()=>{show("home");renderHome();});
+$("start").addEventListener("click",()=>startSession(mode));
+renderHome();
+</script>
+</body>
+</html>
